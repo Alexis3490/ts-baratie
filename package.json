@@ -7,14 +7,12 @@
     "dev": "nodemon",
     "clean": "yarn rimraf .build",
     "build": "yarn babel src/ --out-dir .build --extensions '.ts' --quiet",
-    "start": "yarn build && node .build/server",
+    "start": "yarn build && node .build/index",
     "lint": "eslint . --ext .ts",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "prettier-watch": "onchange 'src/**/*.ts' -- prettier --write {{changed}}"
   },
-  "husky": {
-
-  },
+  "husky": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -22,6 +20,8 @@
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.1",
     "@babel/node": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.13.7",
+    "@babel/plugin-transform-typescript": "^7.13.0",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
     "@types/chalk": "^2.2.0",
@@ -43,5 +43,10 @@
     "rimraf": "^3.0.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.6.2"
+  },
+  "dependencies": {
+    "@babel/plugin-proposal-decorators": "^7.13.5",
+    "@babel/runtime": "^7.13.7",
+    "babel-plugin-transform-typescript-metadata": "^0.3.1"
   }
 }

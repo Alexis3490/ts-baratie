@@ -1,4 +1,11 @@
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+var _Reception = _interopRequireDefault(require("./classes/Reception"));
+
 /* eslint-disable no-console */
+
 /**
  * Recuperer les infos lors de la commande Yarn start
  * Creer une cuisine + associer le nombre de cuisinier par cuisine
@@ -6,25 +13,18 @@
  * Verifier si la commande du plat est valide
  * Avec la commande "status" afficher les cuisines
  */
-
-import { Worker, isMainThread } from 'worker_threads';
-import cluster from 'cluster';
-import Reception from './classes/Reception';
-
-const main = () => {
-  const args: string[] = process.argv.slice(2);
+var main = function main() {
+  var args = process.argv.slice(2);
 
   if (args.length !== 3) {
     console.log('usage: yarn start <MULTIPLIER> <NUMBEROFCOOKS> <TIME>');
     process.exit(0);
   } else {
-    const multiplier = parseInt(args[0]);
-    const cooks = parseInt(args[1]);
-    const time = args[2];
-
-    const reception = new Reception();
-    reception.createKitchen();
-    // //Reception
+    var multiplier = parseInt(args[0]);
+    var cooks = parseInt(args[1]);
+    var time = args[2];
+    var reception = new _Reception["default"]();
+    reception.createKitchen(); // //Reception
     // if (cluster.isMaster) {
     //   //create Kitchen
     //   cluster.fork({ kitchenId: 1 });
