@@ -10,6 +10,8 @@
 import { Worker, isMainThread } from 'worker_threads';
 import cluster from 'cluster';
 import Reception from './classes/Reception';
+import Kitchen from './classes/Kitchen';
+
 
 const main = () => {
   const args: string[] = process.argv.slice(2);
@@ -24,6 +26,11 @@ const main = () => {
 
     const reception = new Reception();
     reception.createKitchen();
+
+    //const kitchen = new Kitchen();
+    //kitchen.CommandClient()
+
+
     // //Reception
     // if (cluster.isMaster) {
     //   //create Kitchen
