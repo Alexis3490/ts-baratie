@@ -27,8 +27,8 @@ const main = () => {
     const reception = new Reception();
     reception.createKitchen();
 
-    //const kitchen = new Kitchen();
-    //kitchen.CommandClient()
+    const kitchen = new Kitchen();
+    kitchen.CommandClient()
 
 
     // //Reception

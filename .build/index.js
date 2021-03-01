@@ -1,56 +1,52 @@
 "use strict";
 
-var _cluster = _interopRequireDefault(require("cluster"));
+var _Reception = _interopRequireDefault(require("./classes/Reception"));
 
-var _os = _interopRequireDefault(require("os"));
-
-var _readlineSync = _interopRequireDefault(require("readline-sync"));
+var _Kitchen = _interopRequireDefault(require("./classes/Kitchen"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-if (_cluster["default"].isMaster) {
-  for (var i = 0; i < _os["default"].cpus().length; i++) {
-    _cluster["default"].fork();
+/* eslint-disable no-console */
 
-    var menu = _readlineSync["default"].question('What is your order ? ');
+/**
+ * Recuperer les infos lors de la commande Yarn start
+ * Creer une cuisine + associer le nombre de cuisinier par cuisine
+ * Commander un plat via la ligne de commande
+ * Verifier si la commande du plat est valide
+ * Avec la commande "status" afficher les cuisines
+ */
+var main = function main() {
+  var args = process.argv.slice(2);
 
-    var globalRegex = new RegExp('[a-zA-Z]+.(S|M|L|XL|XXL)+.x([1-9]|[1-9][0-9]+)(;|)', 'g');
-    var MultipleCommands = new RegExp('.*;.*', 'g');
-
-    if (globalRegex.test(menu)) {
-      if (MultipleCommands.test(menu)) {
-        var listProducts = menu.split(';');
-        console.log(listProducts.length);
-        var data = '{"products":[]}';
-        var json = JSON.parse(data);
-
-        for (var _i = 0; _i < listProducts.length; _i++) {
-          var products = listProducts[_i].split(' ');
-
-          if (products.length > 3) {
-            products = products.slice(1, products.length);
-          }
-
-          json['products'].push({
-            name: products[0],
-            size: products[1],
-            time: products[2]
-          });
-        }
-
-        console.log(json);
-      } else {
-        var _products = menu.split(' ');
-
-        var _data = {
-          name: _products[0],
-          size: _products[1],
-          time: _products[2]
-        };
-        console.log(_data);
-      }
-    } else {
-      console.log('Your order is not correct');
-    }
+  if (args.length !== 3) {
+    console.log('usage: yarn start <MULTIPLIER> <NUMBEROFCOOKS> <TIME>');
+    process.exit(0);
+  } else {
+    var multiplier = parseInt(args[0]);
+    var cooks = parseInt(args[1]);
+    var time = args[2];
+    var reception = new _Reception["default"]();
+    reception.createKitchen();
+    var kitchen = new _Kitchen["default"]();
+    kitchen.CommandClient(); // //Reception
+    // if (cluster.isMaster) {
+    //   //create Kitchen
+    //   cluster.fork({ kitchenId: 1 });
+    // } else {
+    //   //in Kitchen
+    //   if (isMainThread) {
+    //     //create Cooker
+    //     new Worker(__filename);
+    //     console.log(isMainThread);
+    //     console.log(
+    //       `[${process.env.kitchenId}] I am the kitchen ${process.pid}`,
+    //     );
+    //   } else {
+    //     // in Cook
+    //     console.log('cook');
+    //   }
+    // }
   }
-}
+};
+
+main();

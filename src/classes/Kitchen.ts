@@ -6,6 +6,7 @@ export default class Kitchen {
     this.state = State.Open;
   }
   private state: State;
+  private menu: object | undefined;
 
   public createCook(howManyCooks: number): void {
     console.log(howManyCooks);
@@ -34,15 +35,16 @@ export default class Kitchen {
             time: products[2],
           });
         }
-        console.log(typeof json);
+        this.menu = json;
+        console.log(this.menu)
       } else {
         const products = menu.split(' ');
-        const data = {
+        this.menu = {
           name: products[0],
           size: products[1],
           time: products[2],
         };
-        //console.log(data);
+        console.log(this.menu);
       }
     } else {
       console.log('Your order is not correct');

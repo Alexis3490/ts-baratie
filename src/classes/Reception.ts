@@ -1,7 +1,7 @@
 import cluster from 'cluster';
 
 export default class Reception {
-  private static _nb = 1;
+  private static _nb: 1;
   private id: number;
 
   constructor() {
