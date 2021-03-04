@@ -1,54 +1,51 @@
-/* eslint-disable no-console */
-/**
- * Recuperer les infos lors de la commande Yarn start
- * Creer une cuisine + associer le nombre de cuisinier par cuisine
- * Commander un plat via la ligne de commande
- * Verifier si la commande du plat est valide
- * Avec la commande "status" afficher les cuisines
- */
-
-import { Worker, isMainThread } from 'worker_threads';
-import cluster from 'cluster';
-import Reception from './classes/Reception';
 import Kitchen from './classes/Kitchen';
-
+import readline from 'readline';
+import { checkMenu } from './core/helpers/checkMenu';
+import chalk from 'chalk';
 
 const main = () => {
+  let correctOrder = true;
   const args: string[] = process.argv.slice(2);
 
   if (args.length !== 3) {
-    console.log('usage: yarn start <MULTIPLIER> <NUMBEROFCOOKS> <TIME>');
+    console.log('usage: yarn start <MULTIPLIER> <COOKS> <TIME>');
     process.exit(0);
   } else {
     const multiplier = parseInt(args[0]);
     const cooks = parseInt(args[1]);
     const time = args[2];
 
-    const reception = new Reception();
-    reception.createKitchen();
+    console.log(
+      chalk.blue(`Multiplier for the cooking time of the dish : ${multiplier}`),
+    );
+    console.log(chalk.blue(`The number of cooks per kitchen : ${cooks}`));
+    console.log(
+      chalk.blue(
+        `The time in milliseconds, used by the kitchen stock to replace ingredients : ${time}`,
+      ),
+    );
 
-    const kitchen = new Kitchen();
-    kitchen.CommandClient()
+    console.log('what is your order ?');
 
+    const rl = readline.createInterface({
+      input: process.stdin,
+    });
 
-    // //Reception
-    // if (cluster.isMaster) {
-    //   //create Kitchen
-    //   cluster.fork({ kitchenId: 1 });
-    // } else {
-    //   //in Kitchen
-    //   if (isMainThread) {
-    //     //create Cooker
-    //     new Worker(__filename);
-    //     console.log(isMainThread);
-    //     console.log(
-    //       `[${process.env.kitchenId}] I am the kitchen ${process.pid}`,
-    //     );
-    //   } else {
-    //     // in Cook
-    //     console.log('cook');
-    //   }
-    // }
+    rl.on('line', (input: string) => {
+      const orders = input.split(';');
+
+      for (const order of orders) {
+        if (order !== '') {
+          if (!checkMenu(order)) {
+            correctOrder = false;
+          }
+        }
+      }
+      if (correctOrder) {
+        const initialKitchen = new Kitchen(cooks);
+        console.log('initialKitchen', initialKitchen);
+      }
+    });
   }
 };
 
