@@ -47,7 +47,7 @@ const main = () => {
       if (correctOrder) {
         const initialKitchen = new Kitchen(cooks);
         console.log('initialKitchen', initialKitchen);
-        initialKitchen.affectCommandToCook(menu);
+        initialKitchen.getCommand(menu);
       }
     });
   }
