@@ -27,13 +27,15 @@ const main = () => {
 
     console.log('what is your order ?');
 
+    const initialKitchen = new Kitchen(cooks);
+
     const rl = readline.createInterface({
       input: process.stdin,
     });
 
     rl.on('line', (input: string) => {
       const orders = input.split(';');
-
+      orders.filter(el => el !== '');
       for (const order of orders) {
         if (order !== '') {
           if (!checkMenu(order)) {
@@ -42,8 +44,26 @@ const main = () => {
         }
       }
       if (correctOrder) {
-        const initialKitchen = new Kitchen(cooks);
-        console.log('initialKitchen', initialKitchen);
+        const orderPerKitchen: number =
+          orders.length / initialKitchen.getInstanceKitchens().length;
+
+        const limitOrderPerKitchen: number = orders.length * cooks;
+
+        console.log(orderPerKitchen);
+        console.log(limitOrderPerKitchen);
+
+        if (orders.length > limitOrderPerKitchen) {
+          console.log(
+            chalk.red('Each kitchen CANNOT accept more than 2 * N dishes'),
+          );
+        } else {
+          for (const kictchen of initialKitchen.getInstanceKitchens()) {
+            for (const index in orders) {
+              kictchen.addOders(orders[index]);
+            }
+            console.log(kictchen);
+          }
+        }
       }
     });
   }

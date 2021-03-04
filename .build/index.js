@@ -2,6 +2,8 @@
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
+var _Kitchen = _interopRequireDefault(require("./classes/Kitchen"));
+
 var _readline = _interopRequireDefault(require("readline"));
 
 var _checkMenu = require("./core/helpers/checkMenu");
@@ -14,46 +16,61 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-var args = process.argv.slice(2);
+var main = function main() {
+  var correctOrder = true;
+  var args = process.argv.slice(2);
 
-if (args.length !== 3) {
-  console.log('usage: yarn start <MULTIPLIER> <COOKS> <TIME>');
-  process.exit(0);
-} else {
-  var multiplier = parseInt(args[0]);
-  var cooks = parseInt(args[1]);
-  var time = args[2];
-  console.log(_chalk["default"].blue("Multiplier for the cooking time of the dish : ".concat(multiplier)));
-  console.log(_chalk["default"].blue("The number of cooks per kitchen : ".concat(cooks)));
-  console.log(_chalk["default"].blue("The time in milliseconds, used by the kitchen stock to replace ingredients : ".concat(time)));
-  console.log('what is your order ?');
+  if (args.length !== 3) {
+    console.log('usage: yarn start <MULTIPLIER> <COOKS> <TIME>');
+    process.exit(0);
+  } else {
+    var multiplier = parseInt(args[0]);
+    var cooks = parseInt(args[1]);
+    var time = args[2];
+    console.log(_chalk["default"].blue("Multiplier for the cooking time of the dish : ".concat(multiplier)));
+    console.log(_chalk["default"].blue("The number of cooks per kitchen : ".concat(cooks)));
+    console.log(_chalk["default"].blue("The time in milliseconds, used by the kitchen stock to replace ingredients : ".concat(time)));
+    console.log('what is your order ?');
 
-  var rl = _readline["default"].createInterface({
-    input: process.stdin
-  });
+    var rl = _readline["default"].createInterface({
+      input: process.stdin
+    });
 
-  rl.on('line', function (input) {
-    var orders = input.split(';');
+    rl.on('line', function (input) {
+      var orders = input.split(';');
 
-    var _iterator = _createForOfIteratorHelper(orders),
-        _step;
+      var _iterator = _createForOfIteratorHelper(orders),
+          _step;
 
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var order = _step.value;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var order = _step.value;
 
-        if (order !== '') {
-          if ((0, _checkMenu.checkMenu)(order)) {
-            console.log('accepté');
-          } else {
-            console.log('rejeté');
+          if (order !== '') {
+            if (!(0, _checkMenu.checkMenu)(order)) {
+              correctOrder = false;
+            }
           }
         }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
       }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-  });
-}
+
+      if (correctOrder) {
+        var initialKitchen = new _Kitchen["default"]();
+        console.log(initialKitchen.getNbCooks().length);
+
+        if (initialKitchen.getNbCooks().length == 0) {
+          console.log('passe');
+          initialKitchen.assignCooks(cooks);
+        }
+
+        console.log(initialKitchen.getNbCooks());
+      }
+    });
+  }
+};
+
+main();
