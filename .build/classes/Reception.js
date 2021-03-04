@@ -36,6 +36,26 @@ var Reception = /*#__PURE__*/function () {
       Reception._nb++;
       this.id = Reception._nb;
     }
+  }, {
+    key: "orderDish",
+    value: function orderDish() {
+      console.log('commandé un plat');
+    }
+  }, {
+    key: "kitchenState",
+    value: function kitchenState() {
+      console.log('etat cuisine ect ');
+    }
+  }, {
+    key: "displayData",
+    value: function displayData() {
+      console.log('affiche les informations');
+    }
+  }, {
+    key: "save",
+    value: function save() {
+      console.log('conserver un enregistrement');
+    }
   }]);
   return Reception;
 }();
