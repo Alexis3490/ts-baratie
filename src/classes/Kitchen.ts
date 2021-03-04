@@ -1,5 +1,6 @@
 import { State } from '../core/constant';
 import Cook from './Cook';
+import { listMenu } from '../core/helpers/listMenu';
 
 export default class Kitchen {
   private nbCooks: Cook[];
@@ -24,4 +25,10 @@ export default class Kitchen {
   public getNbCooks(): number {
     return this.nbCooks.length;
   }
+
+  public affectCommandToCook = (menu: string): void => {
+    console.log(menu);
+    console.log(this.nbCooks);
+    console.log(listMenu(menu));
+  };
 }

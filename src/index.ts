@@ -33,17 +33,21 @@ const main = () => {
 
     rl.on('line', (input: string) => {
       const orders = input.split(';');
+      let menu = '';
 
       for (const order of orders) {
         if (order !== '') {
           if (!checkMenu(order)) {
             correctOrder = false;
+          } else {
+            menu = order;
           }
         }
       }
       if (correctOrder) {
         const initialKitchen = new Kitchen(cooks);
         console.log('initialKitchen', initialKitchen);
+        initialKitchen.affectCommandToCook(menu);
       }
     });
   }
