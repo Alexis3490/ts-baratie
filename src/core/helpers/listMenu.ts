@@ -3,7 +3,7 @@ import { Dishsize, DishType } from '../constant';
 
 export const listMenu = (
   menu: string,
-): { size: string; name: string; time: string } => {
+): ({ size: string; name: string; time: string } | number)[] => {
   const MultipleCommands = new RegExp('.*;.*', 'g');
   if (MultipleCommands.test(menu)) {
     const listProducts = menu.split(';');
@@ -20,13 +20,16 @@ export const listMenu = (
         time: products[2],
       });
     }
-    return json;
+    return [json, listProducts.length];
   } else {
     const products = menu.split(' ');
-    return {
-      name: products[0],
-      size: products[1],
-      time: products[2],
-    };
+    return [
+      {
+        name: products[0],
+        size: products[1],
+        time: products[2],
+      },
+      1,
+    ];
   }
 };

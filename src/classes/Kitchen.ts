@@ -6,10 +6,15 @@ export default class Kitchen {
   private nbCooks: any[] = [];
   private state: State;
   private stock: object;
+  private commands: object | number;
+  private numberDishesPerOrder: object | number;
+
   constructor(cooks: number) {
     this.assignCooks(cooks);
     this.state = State.Open;
     this.stock = {};
+    this.commands = {};
+    this.numberDishesPerOrder = {};
   }
 
   public assignCooks = (cooks: number): void => {
@@ -25,7 +30,15 @@ export default class Kitchen {
 
   public getCommand = (
     menu: string,
-  ): { size: string; name: string; time: string } => {
-    return listMenu(menu);
+  ): { size: string; name: string; time: string } | number => {
+    this.commands = listMenu(menu)[0];
+    return listMenu(menu)[0];
+  };
+
+  public GetNumberDishesPerOrder = (
+    menu: string,
+  ): { size: string; name: string; time: string } | number => {
+    this.numberDishesPerOrder = listMenu(menu)[1];
+    return listMenu(menu)[1];
   };
 }
