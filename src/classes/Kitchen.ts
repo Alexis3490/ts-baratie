@@ -1,6 +1,6 @@
 import { State } from '../core/constant';
 import Cook from './Cook';
-import { listMenu } from '../core/helpers/listMenu';
+import { listOrder } from '../core/helpers/listOrder';
 
 export default class Kitchen {
   private nbCooks: Cook[] = [];
@@ -29,16 +29,16 @@ export default class Kitchen {
   }
 
   public getCommand = (
-    menu: string,
+    order: string,
   ): { size: string; name: string; time: string } | number => {
-    this.commands = listMenu(menu)[0];
-    return listMenu(menu)[0];
+    this.commands = listOrder(order)[0];
+    return listOrder(order)[0];
   };
 
   public GetNumberDishesPerOrder = (
-    menu: string,
+    order: string,
   ): { size: string; name: string; time: string } | number => {
-    this.numberDishesPerOrder = listMenu(menu)[1];
-    return listMenu(menu)[1];
+    this.numberDishesPerOrder = listOrder(order)[1];
+    return listOrder(order)[1];
   };
 }

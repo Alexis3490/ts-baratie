@@ -1,7 +1,4 @@
-import chalk from 'chalk';
-import { Dishsize, DishType } from '../constant';
-
-export const listMenu = (
+export const listOrder = (
   menu: string,
 ): ({ size: string; name: string; time: string } | number)[] => {
   const MultipleCommands = new RegExp('.*;.*', 'g');

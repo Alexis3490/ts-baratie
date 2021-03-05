@@ -3,7 +3,7 @@ import readline from 'readline';
 import { checkMenu } from './core/helpers/checkMenu';
 import chalk from 'chalk';
 
-const main = () => {
+const main = (): void => {
   let correctOrder = true;
   const args: string[] = process.argv.slice(2);
 
