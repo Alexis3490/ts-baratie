@@ -72,13 +72,10 @@ export default class Kitchen {
     let finalIndex: number;
     for (let i = 0; i < this.orders.length; i++) {
       for (const index in this.cooks) {
-        console.log('cook', this.cooks[index]);
         if (
           this.cooks[index].getOrder() !== null ||
           this.cooks[index].getOrder() == undefined
         ) {
-          console.log('cook', this.cooks[index]);
-
           if (parseInt(index) != 0) {
             finalIndex = parseInt(index) - 1;
           } else {
@@ -87,10 +84,10 @@ export default class Kitchen {
           if (this.orders[finalIndex]) {
             this.cooks[index].setOrder(this.orders[finalIndex]);
           }
-
-          this.orders = this.orders.filter(
-            el => el !== this.orders[finalIndex],
-          );
+          // vider quand le plat est pret
+          // this.orders = this.orders.filter(
+          //   el => el !== this.orders[finalIndex],
+          // );
         }
       }
     }
