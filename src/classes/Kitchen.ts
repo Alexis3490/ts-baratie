@@ -15,7 +15,15 @@ export default class Kitchen {
     Kitchen._nb++;
     this.assignCooks(cooks);
     this.state = State.Open;
-    this.stock = {};
+    this.stock = {
+      poulpe: 5,
+      sauceSoja: 5,
+      riz: 5,
+      porc: 5,
+      oeufs: 5,
+      poulet: 5,
+      nouilles: 5,
+    };
     Kitchen.instanceKitchens.push(this);
   }
 

@@ -47,7 +47,7 @@ const main = () => {
         const orderPerKitchen: number =
           orders.length / initialKitchen.getInstanceKitchens().length;
 
-        const limitOrderPerKitchen: number = orders.length * cooks;
+        const limitOrderPerKitchen: number = 2 * cooks;
 
         console.log(orderPerKitchen);
         console.log(limitOrderPerKitchen);
