@@ -29,7 +29,6 @@ const main = (): void => {
     console.log('what is your order ?');
 
     const initialKitchen = new Kitchen(cooks);
-    new Kitchen(cooks);
 
     const rl = readline.createInterface({
       input: process.stdin,
@@ -47,7 +46,6 @@ const main = (): void => {
       }
 
       if (input == 'status') {
-        //console.log(initialKitchen.getInstanceKitchens())
         for (let i = 0; i < 2; i++) {
           console.log(initialKitchen.getInstanceKitchens()[i].getStock(stocks));
         }
