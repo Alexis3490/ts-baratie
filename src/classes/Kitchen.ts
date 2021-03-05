@@ -24,8 +24,8 @@ export default class Kitchen {
     }
   };
 
-  public getNbCooks(): number {
-    return this.nbCooks.length;
+  public getNbCooks(): Cook[] {
+    return this.nbCooks;
   }
 
   public addCommand = (order: string): void => {
