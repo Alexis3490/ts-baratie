@@ -38,7 +38,7 @@ const main = (): void => {
       const orders = input.split(';');
       orders.filter(el => el !== '');
       for (const order of orders) {
-        if (order !== '' && input !== 'status') {
+        if (order !== '' && input !== 'status' && input !== 'save') {
           if (!checkMenu(order)) {
             correctOrder = false;
           }
@@ -50,8 +50,12 @@ const main = (): void => {
           console.log(initialKitchen.getInstanceKitchens()[i].getStock(stocks));
         }
       }
+      if (input == 'save') {
+        console.log("test")
+        initialKitchen.saveCommand(1, 'test');
+      }
 
-      if (correctOrder && input != 'status') {
+      if (correctOrder && input != 'status' && input != 'save') {
         const orderPerKitchen: number =
           orders.length / initialKitchen.getInstanceKitchens().length;
 
