@@ -1,13 +1,15 @@
 import { State } from '../core/constant';
+import { Stock } from '../core/constant';
+
 import Cook from './Cook';
 
 export default class Kitchen {
   private id: number;
   private static _nb = 1;
 
-  private nbCooks: Cook[] = [];
+  private cooks: Cook[] = [];
   private state: State;
-  private stock: object;
+  private stock: Stock;
   private orders: string[] = [];
   private static instanceKitchens: Kitchen[] = [];
   constructor(cooks: number) {
@@ -16,13 +18,16 @@ export default class Kitchen {
     this.assignCooks(cooks);
     this.state = State.Open;
     this.stock = {
-      poulpe: 5,
-      sauceSoja: 5,
-      riz: 5,
-      porc: 5,
-      oeufs: 5,
-      poulet: 5,
-      nouilles: 5,
+      octopus: 5,
+      sojaSauce: 5,
+      rice: 5,
+      pork: 5,
+      eggs: 5,
+      noodle: 5,
+      chicken: 5,
+      dough: 5,
+      matcha: 5,
+      chocolate: 5,
     };
     Kitchen.instanceKitchens.push(this);
   }
@@ -30,7 +35,7 @@ export default class Kitchen {
   public assignCooks(cooks: number): void {
     for (let i = 0; i < cooks; i++) {
       const cook = new Cook();
-      this.nbCooks.push(cook);
+      this.cooks.push(cook);
     }
   }
 
@@ -42,7 +47,52 @@ export default class Kitchen {
     this.orders.push(order);
   }
 
-  public getNbCooks(): Cook[] {
-    return this.nbCooks;
+  public getOrders(): string[] {
+    return this.orders;
+  }
+
+  public updateAllStocks(): void {
+    for (const kitchen of this.getInstanceKitchens()) {
+      kitchen.stock = {
+        octopus: kitchen.stock.octopus + 1,
+        sojaSauce: kitchen.stock.sojaSauce + 1,
+        rice: kitchen.stock.rice + 1,
+        pork: kitchen.stock.pork + 1,
+        eggs: kitchen.stock.eggs + 1,
+        noodle: kitchen.stock.noodle + 1,
+        chicken: kitchen.stock.chicken + 1,
+        dough: kitchen.stock.dough + 1,
+        matcha: kitchen.stock.matcha + 1,
+        chocolate: kitchen.stock.chocolate + 1,
+      };
+    }
+  }
+
+  public assignOrderToCook(): void {
+    let finalIndex: number;
+    for (let i = 0; i < this.orders.length; i++) {
+      for (const index in this.cooks) {
+        console.log('cook', this.cooks[index]);
+        if (
+          this.cooks[index].getOrder() !== null ||
+          this.cooks[index].getOrder() == undefined
+        ) {
+          console.log('cook', this.cooks[index]);
+
+          if (parseInt(index) != 0) {
+            finalIndex = parseInt(index) - 1;
+          } else {
+            finalIndex = parseInt(index);
+          }
+          if (this.orders[finalIndex]) {
+            this.cooks[index].setOrder(this.orders[finalIndex]);
+          }
+
+          this.orders = this.orders.filter(
+            el => el !== this.orders[finalIndex],
+          );
+        }
+      }
+    }
   }
 }
