@@ -3,7 +3,7 @@ import Cook from './Cook';
 import { listMenu } from '../core/helpers/listMenu';
 
 export default class Kitchen {
-  private nbCooks: any[] = [];
+  private nbCooks: Cook[] = [];
   private state: State;
   private stock: object;
   private commands: object | number;
