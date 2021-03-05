@@ -2,7 +2,6 @@ import { State, stocks } from '../core/constant';
 import Cook from './Cook';
 import fs from 'fs';
 import { listOrder } from '../core/helpers/listOrder';
-import { workerData } from "worker_threads";
 
 export default class Kitchen {
   private id: number;
@@ -64,8 +63,8 @@ export default class Kitchen {
   };
 
   public saveCommand = (id: number, dish: string): void => {
-    const directory= 'data'
-    const path=`${directory}/data.txt`
+    const directory = 'data';
+    const path = `${directory}/data.txt`;
     if (!fs.existsSync(directory)) {
       fs.mkdirSync(directory);
     }
@@ -75,10 +74,7 @@ export default class Kitchen {
         `\nThe kitchen number ${id} make the dish : ${dish}`,
       );
     } else {
-      fs.writeFileSync(
-        path,
-        `The kitchen number ${id} make the dish ${dish}`,
-      );
+      fs.writeFileSync(path, `The kitchen number ${id} make the dish ${dish}`);
     }
   };
 }

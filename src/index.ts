@@ -51,7 +51,7 @@ const main = (): void => {
         }
       }
       if (input == 'save') {
-        console.log("test")
+        console.log('test');
         initialKitchen.saveCommand(1, 'test');
       }
 
