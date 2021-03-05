@@ -43,7 +43,7 @@ const main = (): void => {
       if (correctOrder) {
         const initialKitchen = new Kitchen(cooks);
         console.log('initialKitchen', initialKitchen);
-        initialKitchen.getCommand(input);
+        initialKitchen.addCommand(input);
         initialKitchen.GetNumberDishesPerOrder(input);
       }
     });

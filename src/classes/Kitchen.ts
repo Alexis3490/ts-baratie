@@ -28,17 +28,11 @@ export default class Kitchen {
     return this.nbCooks.length;
   }
 
-  public getCommand = (
-    order: string,
-  ): { size: string; name: string; time: string } | number => {
+  public addCommand = (order: string): void => {
     this.commands = listOrder(order)[0];
-    return listOrder(order)[0];
   };
 
-  public GetNumberDishesPerOrder = (
-    order: string,
-  ): { size: string; name: string; time: string } | number => {
+  public GetNumberDishesPerOrder = (order: string): void => {
     this.numberDishesPerOrder = listOrder(order)[1];
-    return listOrder(order)[1];
   };
 }
