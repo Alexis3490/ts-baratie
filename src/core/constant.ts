@@ -1,7 +1,7 @@
 export enum State {
-  'Open',
-  'Waiting',
-  'Close',
+  'Open' = 'Open',
+  'Waiting' = 'Waiting',
+  'Close' = 'Waiting',
 }
 
 export enum DishType {
@@ -18,4 +18,14 @@ export enum Dishsize {
   L = 4,
   XL = 8,
   XXL = 16,
+}
+
+export enum stocks {
+  poulpe = 5,
+  sauceSoja = 5,
+  riz = 5,
+  porc = 5,
+  oeufs = 5,
+  poulet = 5,
+  nouilles = 5,
 }

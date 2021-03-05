@@ -20,7 +20,7 @@ export const checkMenu = (menu: string): boolean => {
   if (regex.test(menu)) {
     boolean = true;
   } else {
-    console.log(chalk.red('Your oder is not correct'));
+    console.log(chalk.red('Your order is not correct'));
   }
   return boolean;
 };

@@ -1,20 +1,26 @@
-import { State } from '../core/constant';
+import { State, stocks } from '../core/constant';
 import Cook from './Cook';
 import { listOrder } from '../core/helpers/listOrder';
 
 export default class Kitchen {
+  private id: number;
+  private static _nb = 1;
   private nbCooks: Cook[] = [];
   private state: State;
-  private stock: object;
+  private status: string | undefined;
   private commands: object | number;
   private numberDishesPerOrder: object | number;
+  private static instanceKitchens: Kitchen[] = [];
 
   constructor(cooks: number) {
+    this.id = Kitchen._nb;
+    Kitchen._nb++;
     this.assignCooks(cooks);
     this.state = State.Open;
-    this.stock = {};
     this.commands = {};
     this.numberDishesPerOrder = {};
+    this.getStock(stocks);
+    Kitchen.instanceKitchens.push(this);
   }
 
   public assignCooks = (cooks: number): void => {
@@ -24,15 +30,34 @@ export default class Kitchen {
     }
   };
 
+  public getInstanceKitchens(): Kitchen[] {
+    return Kitchen.instanceKitchens;
+  }
+
   public getNbCooks(): Cook[] {
     return this.nbCooks;
   }
 
-  public addCommand = (order: string): void => {
+  public addOrders = (order: string): void => {
     this.commands = listOrder(order)[0];
   };
 
-  public GetNumberDishesPerOrder = (order: string): void => {
+  public getNumberDishesPerOrder = (order: string): void => {
     this.numberDishesPerOrder = listOrder(order)[1];
+  };
+
+  public getStock = (stock: any): string => {
+    const keys = Object.keys(stock);
+    const value = Object.values(stock);
+    const kitchen = '{}';
+    const json = JSON.parse(kitchen);
+    const obj: any = {};
+    for (let i = 1; i < keys.length; i++) {
+      obj[keys[i]] = value[i];
+    }
+    json.stocks = obj;
+    json.state = this.state;
+    json.kitchen = this.id;
+    return (this.status = JSON.stringify(json, null, 2));
   };
 }

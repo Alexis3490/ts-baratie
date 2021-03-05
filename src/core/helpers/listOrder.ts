@@ -1,6 +1,4 @@
-export const listOrder = (
-  menu: string,
-): ({ size: string; name: string; time: string } | number)[] => {
+export const listOrder = (menu: string): (object | number)[] => {
   const MultipleCommands = new RegExp('.*;.*', 'g');
   if (MultipleCommands.test(menu)) {
     const listProducts = menu.split(';');
