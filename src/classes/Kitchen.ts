@@ -1,7 +1,6 @@
+import fs from 'fs';
 import { State } from '../core/constant';
 import { Stock } from '../core/constant';
-import fs from 'fs';
-
 import Cook from './Cook';
 
 export default class Kitchen {

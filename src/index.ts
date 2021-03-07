@@ -1,12 +1,12 @@
-import Kitchen from './classes/Kitchen';
 import readline from 'readline';
-import { checkMenu } from './core/helpers/checkMenu';
+import fs from 'fs';
 import chalk from 'chalk';
+import Kitchen from './classes/Kitchen';
+import { checkMenu } from './core/helpers/checkMenu';
 import updateAllStocks from './core/helpers/updateAllStocks';
 import { affectOrderToKitchen } from './core/helpers/affectOrder';
 import { affectOrderToCook } from './core/helpers/affectOrder';
 
-import fs from 'fs';
 
 const main = (): void => {
   let correctOrder = true;
