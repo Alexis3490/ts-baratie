@@ -1,4 +1,4 @@
-import Kitchen from '../../../classes/Kitchen';
+import Kitchen from '../../classes/Kitchen';
 
 export const affectOrderToKitchen = (
   kitchens: Kitchen[],

@@ -3,8 +3,8 @@ import readline from 'readline';
 import { checkMenu } from './core/helpers/checkMenu';
 import chalk from 'chalk';
 import updateAllStocks from './core/helpers/updateAllStocks';
-import { affectOrderToKitchen } from './core/helpers/order/affectOrder';
-import { affectOrderToCook } from './core/helpers/order/affectOrder';
+import { affectOrderToKitchen } from './core/helpers/affectOrder';
+import { affectOrderToCook } from './core/helpers/affectOrder';
 
 import fs from 'fs';
 
@@ -78,7 +78,6 @@ const main = (): void => {
             cooks,
             initialKitchen,
           );
-          // assign each kitchen order by cook
           affectOrderToCook(kitchens, time);
         }
       }
