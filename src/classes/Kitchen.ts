@@ -71,7 +71,7 @@ export default class Kitchen {
     if (fs.existsSync(path)) {
       fs.appendFileSync(
         path,
-        `\nThe kitchen number ${id} make the dish : ${dish}`,
+        `\nThe kitchen number ${id} make the dish ${dish}`,
       );
     } else {
       fs.writeFileSync(path, `The kitchen number ${id} make the dish ${dish}`);

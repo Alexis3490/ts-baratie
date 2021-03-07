@@ -3,6 +3,7 @@ import readline from 'readline';
 import { checkMenu } from './core/helpers/checkMenu';
 import chalk from 'chalk';
 import { stocks } from './core/constant';
+import fs from "fs";
 
 const main = (): void => {
   let correctOrder = true;
@@ -15,6 +16,14 @@ const main = (): void => {
     const multiplier = parseInt(args[0]);
     const cooks = parseInt(args[1]);
     const time = args[2];
+
+    const directory = 'data';
+    const path = `${directory}/data.txt`;
+    if (fs.existsSync(path)) {
+      fs.truncate(path, 0, () => {
+        //console.log('file empty');
+      });
+    }
 
     console.log(
       chalk.blue(`Multiplier for the cooking time of the dish : ${multiplier}`),
