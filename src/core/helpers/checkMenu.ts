@@ -13,10 +13,9 @@ export const checkMenu = (menu: string): boolean => {
   });
 
   const regex = new RegExp(
-    `${name.join('|')}+.${size.join('|')}+.x([1-9]|[1-9][0-9]+)(;|)`,
+    `(${name.join('|')})+.(${size.join('|')})+.x([1-9]|[1-9][0-9]+)(;|)`,
     'g',
   );
-
   if (regex.test(menu)) {
     boolean = true;
   } else {
