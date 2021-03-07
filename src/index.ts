@@ -53,10 +53,7 @@ const main = () => {
           orders.length / initialKitchen.getInstanceKitchens().length;
 
         const limitOrderPerKitchen: number = 2 * cooks;
-
-        // console.log(orderPerKitchen);
-        // console.log(limitOrderPerKitchen);
-
+        console.log(orders.length);
         if (orders.length > limitOrderPerKitchen) {
           console.log(
             chalk.red('Each kitchen CANNOT accept more than 2 * N dishes'),
@@ -75,13 +72,18 @@ const main = () => {
               kitchens = initialKitchen.getInstanceKitchens();
             }
           }
-          console.log('--------- ALL KITCHENS NOW --------- ', kitchens);
-        }
-        // assign each kitchen order by cook
+          // console.log('--------- ALL KITCHENS NOW --------- ', kitchens);
 
-        for (const kitchen of kitchens) {
-          kitchen.assignOrderToCook();
-          console.log(kitchen);
+          // assign each kitchen order by cook
+          for (const kitchen of kitchens) {
+            kitchen.assignOrderToCook();
+            console.log(kitchen);
+            for (const cook of kitchen.getCooks()) {
+              if (cook.getOrder() !== '') {
+                cook.buildOrder(time);
+              }
+            }
+          }
         }
       }
     });

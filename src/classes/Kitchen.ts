@@ -9,14 +9,14 @@ export default class Kitchen {
 
   private cooks: Cook[] = [];
   private state: State;
-  private stock: Stock;
+  private stock: any;
   private orders: string[] = [];
   private static instanceKitchens: Kitchen[] = [];
   constructor(cooks: number) {
     this.id = Kitchen._nb;
     Kitchen._nb++;
     this.assignCooks(cooks);
-    this.state = State.Open;
+    this.state = State.Available;
     this.stock = {
       octopus: 5,
       sojaSauce: 5,
@@ -34,7 +34,7 @@ export default class Kitchen {
 
   public assignCooks(cooks: number): void {
     for (let i = 0; i < cooks; i++) {
-      const cook = new Cook();
+      const cook = new Cook(this);
       this.cooks.push(cook);
     }
   }
@@ -44,7 +44,7 @@ export default class Kitchen {
   }
 
   public addOders(order: string): void {
-    this.orders.push(order);
+    this.orders.push(order.trim());
   }
 
   public getOrders(): string[] {
@@ -69,27 +69,44 @@ export default class Kitchen {
   }
 
   public assignOrderToCook(): void {
-    let finalIndex: number;
     for (let i = 0; i < this.orders.length; i++) {
       for (const index in this.cooks) {
         if (
           this.cooks[index].getOrder() !== null ||
           this.cooks[index].getOrder() == undefined
         ) {
-          if (parseInt(index) != 0) {
-            finalIndex = parseInt(index) - 1;
-          } else {
-            finalIndex = parseInt(index);
+          if (this.orders[index]) {
+            this.cooks[index].setOrder(this.orders[index]);
+            this.cooks[index];
           }
-          if (this.orders[finalIndex]) {
-            this.cooks[index].setOrder(this.orders[finalIndex]);
-          }
-          // vider quand le plat est pret
-          // this.orders = this.orders.filter(
-          //   el => el !== this.orders[finalIndex],
-          // );
         }
       }
+    }
+  }
+
+  public getCooks(): Cook[] {
+    return this.cooks;
+  }
+  public getId(): number {
+    return this.id;
+  }
+  public updateStockByCook(dataDish: string[]): Stock {
+    for (const index in dataDish) {
+      if (parseInt(index) !== dataDish.length - 1) {
+        this.stock[dataDish[index]] = this.stock[dataDish[index]] - 1;
+      }
+    }
+
+    return this.stock;
+  }
+  public setState(state: State): void {
+    this.state = state;
+  }
+
+  public removeDish(dish: string): void {
+    this.orders = this.orders.filter(el => el !== dish);
+    if (this.orders.length === 0) {
+      this.state = State.Available;
     }
   }
 }
