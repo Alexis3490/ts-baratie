@@ -1,3 +1,4 @@
+
 <p align="center">
   <img alt="" src="./baratie.logo.png"">
 </p>
@@ -177,3 +178,4 @@ I know you love that, well you can in bulk:
 ## <a name='credits'>🐵 Credits</a>
 
 Craft with :heart: in **Paris**.
+
