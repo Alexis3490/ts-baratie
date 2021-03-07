@@ -7,7 +7,6 @@ import updateAllStocks from './core/helpers/updateAllStocks';
 import { affectOrderToKitchen } from './core/helpers/affectOrder';
 import { affectOrderToCook } from './core/helpers/affectOrder';
 
-
 const main = (): void => {
   let correctOrder = true;
   const args: string[] = process.argv.slice(2);
