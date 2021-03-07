@@ -1,5 +1,6 @@
 import { State } from '../core/constant';
 import { Stock } from '../core/constant';
+import fs from 'fs';
 
 import Cook from './Cook';
 
@@ -9,6 +10,7 @@ export default class Kitchen {
 
   private cooks: Cook[] = [];
   private state: State;
+  private status: string | undefined;
   private stock: any;
   private orders: string[] = [];
   private static instanceKitchens: Kitchen[] = [];
@@ -109,4 +111,40 @@ export default class Kitchen {
       this.state = State.Available;
     }
   }
+
+  public getStatus = (): string => {
+    const keys = Object.keys(this.stock);
+    const value = Object.values(this.stock);
+    const kitchen = '{}';
+    const json = JSON.parse(kitchen);
+    const obj: any = {};
+    for (let i = 1; i < keys.length; i++) {
+      obj[keys[i]] = value[i];
+    }
+    json.kitchen = this.id;
+    json.stocks = obj;
+    json.state = this.state;
+
+    for (const cook of this.cooks) {
+      json[`cook_${cook.getId()}_state`] = cook.getState();
+    }
+
+    return json;
+  };
+
+  public saveCommand = (id: number, dish: string): void => {
+    const directory = 'data';
+    const path = `${directory}/data.txt`;
+    if (!fs.existsSync(directory)) {
+      fs.mkdirSync(directory);
+    }
+    if (fs.existsSync(path)) {
+      fs.appendFileSync(
+        path,
+        `\nThe kitchen number ${id} make the dish ${dish}`,
+      );
+    } else {
+      fs.writeFileSync(path, `The kitchen number ${id} make the dish ${dish}`);
+    }
+  };
 }

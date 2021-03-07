@@ -2,9 +2,13 @@ import Kitchen from './classes/Kitchen';
 import readline from 'readline';
 import { checkMenu } from './core/helpers/checkMenu';
 import chalk from 'chalk';
-import updateAllStocks from './core/updateAllStocks';
+import updateAllStocks from './core/helpers/updateAllStocks';
+import { affectOrderToKitchen } from './core/helpers/order/affectOrder';
+import { affectOrderToCook } from './core/helpers/order/affectOrder';
 
-const main = () => {
+import fs from 'fs';
+
+const main = (): void => {
   let correctOrder = true;
   const args: string[] = process.argv.slice(2);
 
@@ -16,6 +20,14 @@ const main = () => {
     const cooks = parseInt(args[1]);
     const time = parseInt(args[2]);
 
+    const directory = 'data';
+    const path = `${directory}/data.txt`;
+    if (fs.existsSync(path)) {
+      fs.truncate(path, 0, () => {
+        //console.log('file empty');
+      });
+    }
+
     console.log(
       chalk.blue(`Multiplier for the cooking time of the dish : ${multiplier}`),
     );
@@ -26,7 +38,7 @@ const main = () => {
       ),
     );
 
-    console.log('what is your order ?');
+    console.log('What is your order ?');
 
     const initialKitchen = new Kitchen(cooks);
 
@@ -40,50 +52,34 @@ const main = () => {
       const orders = input.split(';');
       orders.filter(el => el !== '');
       for (const order of orders) {
-        if (order !== '') {
+        if (order !== '' && input !== 'status') {
           if (!checkMenu(order)) {
             correctOrder = false;
           }
         }
       }
-      if (correctOrder) {
-        let kitchens = initialKitchen.getInstanceKitchens();
-        // Assign each orders by kitchen
-        const orderPerKitchen: number =
-          orders.length / initialKitchen.getInstanceKitchens().length;
-
+      if (input == 'status') {
+        for (const kitchen of initialKitchen.getInstanceKitchens()) {
+          console.log(kitchen.getStatus());
+        }
+      }
+      if (correctOrder && input != 'status') {
+        const kitchens = initialKitchen.getInstanceKitchens();
         const limitOrderPerKitchen: number = 2 * cooks;
-        console.log(orders.length);
         if (orders.length > limitOrderPerKitchen) {
           console.log(
             chalk.red('Each kitchen CANNOT accept more than 2 * N dishes'),
           );
         } else {
-          for (let i = kitchens.length - 1; i < kitchens.length; i++) {
-            if (
-              orders.length + kitchens[i].getOrders().length <=
-              limitOrderPerKitchen
-            ) {
-              for (const index in orders) {
-                kitchens[i].addOders(orders[index]);
-              }
-            } else {
-              new Kitchen(cooks);
-              kitchens = initialKitchen.getInstanceKitchens();
-            }
-          }
-          // console.log('--------- ALL KITCHENS NOW --------- ', kitchens);
-
+          affectOrderToKitchen(
+            kitchens,
+            orders,
+            limitOrderPerKitchen,
+            cooks,
+            initialKitchen,
+          );
           // assign each kitchen order by cook
-          for (const kitchen of kitchens) {
-            kitchen.assignOrderToCook();
-            console.log(kitchen);
-            for (const cook of kitchen.getCooks()) {
-              if (cook.getOrder() !== '') {
-                cook.buildOrder(time);
-              }
-            }
-          }
+          affectOrderToCook(kitchens, time);
         }
       }
     });

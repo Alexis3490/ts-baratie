@@ -1,13 +1,26 @@
 import chalk from 'chalk';
+import { Dishsize, DishType } from '../constant';
 
 export const checkMenu = (menu: string): boolean => {
   let boolean = false;
-  const regex = /[a-zA-Z]+.(S|M|L|XL|XXL)+.x([1-9]|[1-9][0-9]+)(;|)/g;
 
-  if (menu.match(regex)) {
+  const name = Object.keys(DishType).filter(element => {
+    return isNaN(Number(element));
+  });
+
+  const size = Object.keys(Dishsize).filter(element => {
+    return isNaN(Number(element));
+  });
+
+  const regex = new RegExp(
+    `(${name.join('|')})+.(${size.join('|')})+.x([1-9]|[1-9][0-9]+)(;|)`,
+    'g',
+  );
+
+  if (regex.test(menu)) {
     boolean = true;
   } else {
-    console.log(chalk.red('Your oder is not correct'));
+    console.log(chalk.red('Your order is not correct'));
   }
   return boolean;
 };

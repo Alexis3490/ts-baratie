@@ -1,4 +1,4 @@
-import Kitchen from '../classes/Kitchen';
+import Kitchen from '../../classes/Kitchen';
 
 const updateAllStocks = (time: number, kitchen: Kitchen) => {
   setInterval(function() {

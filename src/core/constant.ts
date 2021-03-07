@@ -38,6 +38,19 @@ export type Stock = {
   chocolate: number;
 };
 
+export enum stocks {
+  octopus = 5,
+  sojaSauce = 5,
+  rice = 5,
+  pork = 5,
+  eggs = 5,
+  noodle = 5,
+  chicken = 5,
+  dough = 5,
+  matcha = 5,
+  chocolate = 5,
+}
+
 type DishesData = {
   Takoyaki: {
     octopus: number;

@@ -20,6 +20,12 @@ export default class Cook {
   public getOrder(): string {
     return this.order;
   }
+  public getState(): StateCook {
+    return this.state;
+  }
+  public getId(): number {
+    return this.id;
+  }
   public setOrder(order: string): void {
     this.order = order;
   }
@@ -49,11 +55,12 @@ export default class Cook {
           }`,
         ),
       );
+      this.kitchen.saveCommand(this.kitchen.getId(), dish);
       this.state = StateCook.Available;
       // this.kitchen.setState(State.Available);
       this.kitchen.removeDish(this.order.trim());
       this.order = '';
-      console.log(this.kitchen);
+      // console.log(this.kitchen);
 
       if (this.order == '' && this.kitchen.getOrders().length !== 0) {
         if (!isBookedByCook(this.kitchen)) {
